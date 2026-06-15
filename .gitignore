@@ -6,6 +6,7 @@ secrets/
 *.key
 # deps / build
 node_modules/
+backend/static/
 __pycache__/
 *.pyc
 .venv/

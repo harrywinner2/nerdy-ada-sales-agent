@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ada — Nerdy AI Sales Agent · Design Mockup</title>
+<!--
+  Single-file design mockup (Phase 3 artifact). The SHIPPED product is the live React app in
+  /frontend, served by the FastAPI backend. This file is a self-contained, offline-openable
+  reference of the visual language and every screen, styled from nerdy.com's real tokens.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F0928;--bg2:#161C2C;--bg3:#202344;--line:rgba(255,255,255,.08);
+  --text:#fff;--dim:rgba(255,255,255,.64);--accent:#17E2EA;--a2:#8B5CFF;--a3:#FF4FD8;
+  --ok:#28E0A8;--warn:#FFC53D;--bad:#FF5C7A;
+  --grad:linear-gradient(100deg,#FF4FD8,#8B5CFF,#17E2EA);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:0;background:
+  radial-gradient(40vw 40vw at 15% 10%,rgba(255,79,216,.18),transparent 60%),
+  radial-gradient(45vw 45vw at 85% 90%,rgba(23,226,234,.16),transparent 60%);filter:blur(20px)}
+.app{position:relative;z-index:1;display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.side{border-right:1px solid var(--line);padding:24px 16px;background:rgba(15,9,40,.5);backdrop-filter:blur(8px)}
+.brand{font-weight:700;font-size:26px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding:4px 8px 18px}
+.sub{font-size:10px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;padding:0 8px 8px}
+.nav a{display:flex;gap:10px;align-items:center;padding:11px 12px;border-radius:12px;color:var(--dim);text-decoration:none;font-size:14px;font-weight:500;cursor:pointer;position:relative;margin-bottom:2px}
+.nav a.active{color:#fff;background:rgba(255,255,255,.05)}
+.nav a.active::before{content:"";position:absolute;left:-16px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--grad)}
+.main{padding:28px 36px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
+h1{font-size:30px;margin:0 0 4px}.lead{color:var(--dim);font-size:14px;margin:0}
+.pill{display:inline-flex;gap:8px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:12px;color:var(--dim)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+.card{background:linear-gradient(180deg,rgba(32,35,68,.6),rgba(22,28,44,.6));border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.45)}
+.grid{display:grid;gap:18px}
+.btn{font-family:inherit;font-weight:600;font-size:14px;border:none;border-radius:12px;padding:13px 22px;cursor:pointer;background:var(--accent);color:#04222a;box-shadow:0 0 24px rgba(23,226,234,.35)}
+.btn.ghost{background:var(--bg3);color:#fff;box-shadow:none;border:1px solid var(--line)}
+.chip{display:inline-block;font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px}
+.chip.ok{background:rgba(40,224,168,.15);color:var(--ok)}.chip.warn{background:rgba(255,197,61,.15);color:var(--warn)}
+.chip.dim{background:rgba(255,255,255,.08);color:var(--dim)}.chip.cy{background:rgba(23,226,234,.15);color:var(--accent)}
+.chip.vi{background:rgba(139,92,255,.18);color:#b9a6ff}.chip.bad{background:rgba(255,92,122,.15);color:var(--bad)}
+.screen{display:none}.screen.on{display:block}
+.orb{width:230px;height:230px;border-radius:50%;margin:8px auto 22px;background:radial-gradient(circle at 35% 30%,#3a2f7a,#160f3a 70%);box-shadow:0 0 80px rgba(139,92,255,.5),inset 0 0 60px rgba(23,226,234,.3);animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 70px rgba(139,92,255,.45)}50%{transform:scale(1.04);box-shadow:0 0 100px rgba(23,226,234,.5)}}
+.mono{font-family:"JetBrains Mono",monospace;font-size:13px}
+.bubble{padding:11px 15px;border-radius:14px;margin:8px 0;max-width:80%;font-size:13px;line-height:1.5}
+.bubble.agent{background:rgba(23,226,234,.1);border:1px solid rgba(23,226,234,.25)}
+.bubble.prospect{background:rgba(139,92,255,.12);border:1px solid rgba(139,92,255,.28);margin-left:auto}
+.kpi{font-size:46px;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.klabel{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.bar{height:9px;border-radius:9px;background:rgba(255,255,255,.08);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--grad)}
+.rail{border-left:2px solid;border-image:var(--grad) 1;padding-left:18px;margin-left:6px}
+.rail .ev{position:relative;margin-bottom:16px}
+.rail .ev::before{content:"";position:absolute;left:-26px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;color:var(--dim);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:10px 12px;border-bottom:1px solid var(--line)}
+td{padding:12px;border-bottom:1px solid var(--line)}
+.delta{font-size:34px;font-weight:700;color:var(--ok)}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">Ada</div>
+    <div class="sub">Nerdy AI Sales Agent</div>
+    <nav class="nav" id="nav">
+      <a data-s="live" class="active">◉ Live Call</a>
+      <a data-s="calls">▤ Calls</a>
+      <a data-s="detail">❯ Call detail</a>
+      <a data-s="kb">◈ Knowledge Base</a>
+      <a data-s="exp">⟳ Recursive Improvement</a>
+      <a data-s="pers">◍ Synthetic Prospects</a>
+      <a data-s="kpi">▰ KPIs</a>
+    </nav>
+  </aside>
+  <main class="main">
+    <div class="head">
+      <div><h1 id="title">Live Call</h1><p class="lead" id="ld">Talk to Ada in real time — she discovers, qualifies, and closes.</p></div>
+      <div class="pill"><span class="dot"></span> gpt-realtime · 12 KB docs · OpenAI ✓ · Twilio ✓</div>
+    </div>
+
+    <!-- LIVE -->
+    <section class="screen on" id="live">
+      <div class="grid" style="grid-template-columns:1.1fr 1fr">
+        <div class="card" style="text-align:center">
+          <div class="orb"></div>
+          <button class="btn">● Start call</button>
+          <p class="lead" style="margin-top:16px">Press start, allow the mic, and talk. Ada responds with voice and adapts turn by turn — with full barge-in.</p>
+        </div>
+        <div class="card">
+          <b>Live transcript</b>
+          <div style="margin-top:14px">
+            <div class="bubble agent mono">Hi, this is Ada at Nerdy! What grade is your student in?</div>
+            <div class="bubble prospect mono">She's in 9th grade, geometry — there's a test in two weeks.</div>
+            <div class="bubble agent mono">Got it. Let's get her ready. What's the goal — a specific grade?</div>
+          </div>
+        </div>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:18px">
+        <div class="card"><b>How Ada decides</b>
+          <p class="lead" style="margin-top:10px"><span class="chip cy">Discover</span> prioritized questions, skip-when-known &nbsp; <span class="chip vi">Ground</span> KB lookup, no hallucinations &nbsp; <span class="chip ok">Decide</span> ask · pivot · escalate</p></div>
+        <div class="card"><b>Call my phone</b><p class="lead" style="margin-top:10px">Live end-to-end demo over a real PSTN call via Twilio.</p>
+          <div style="display:flex;gap:8px;margin-top:8px"><input class="mono" style="flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:12px;padding:12px;color:#fff" value="+1 252 701 4889"><button class="btn ghost">Call me</button></div></div>
+      </div>
+    </section>
+
+    <!-- CALLS -->
+    <section class="screen" id="calls">
+      <div class="card"><table>
+        <tr><th>Channel</th><th>Outcome</th><th>Discovery</th><th>Turns</th><th>Version</th><th>When</th></tr>
+        <tr><td><span class="chip cy">web</span></td><td><span class="chip ok">booked_consult</span></td><td><div class="bar" style="width:120px"><i style="width:100%"></i></div></td><td>7</td><td class="mono">ada-baseline-8897</td><td class="dim">2m ago</td></tr>
+        <tr><td><span class="chip vi">sim</span></td><td><span class="chip warn">disqualified</span></td><td><div class="bar" style="width:120px"><i style="width:50%"></i></div></td><td>4</td><td class="mono">ada-value-2f1a</td><td class="dim">5m ago</td></tr>
+        <tr><td><span class="chip dim">phone</span></td><td><span class="chip dim">not_now</span></td><td><div class="bar" style="width:120px"><i style="width:83%"></i></div></td><td>9</td><td class="mono">ada-baseline-8897</td><td class="dim">8m ago</td></tr>
+      </table></div>
+    </section>
+
+    <!-- DETAIL -->
+    <section class="screen" id="detail">
+      <div class="grid" style="grid-template-columns:1.3fr 1fr">
+        <div class="card"><b>Transcript</b>
+          <div style="margin-top:12px">
+            <div class="bubble agent mono">What grade is your student in?</div>
+            <div class="bubble prospect mono">8th grade, algebra. But honestly $400 feels steep.</div>
+            <div class="bubble agent mono">I hear you. 1-on-1 means fewer hours than a class — and there's a free consult to start, no contract.</div>
+          </div></div>
+        <div class="card"><b>Decision timeline</b>
+          <div class="rail" style="margin-top:14px">
+            <div class="ev"><span class="chip cy">ask</span> student_grade · conf 0.7<br><span class="lead">prioritized discovery</span></div>
+            <div class="ev"><span class="chip vi">answer</span> grounded:true · Pricing<br><span class="lead">cited Tutoring Plans &amp; Pricing</span></div>
+            <div class="ev"><span class="chip ok">pivot_close</span> conf 0.8<br><span class="lead">all required fields gathered</span></div>
+          </div></div>
+      </div>
+    </section>
+
+    <!-- KB -->
+    <section class="screen" id="kb">
+      <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="card"><span class="chip cy">pricing</span><h3>Tutoring Plans &amp; Pricing</h3><p class="lead">Monthly memberships; Standard ≈ $400/mo for 8 hrs. No contract.</p></div>
+        <div class="card"><span class="chip warn">objection</span><h3>It's expensive</h3><p class="lead">Ground in value; right-size the plan; free consult. Avoid arbitrary discounts.</p></div>
+        <div class="card"><span class="chip vi">competitive</span><h3>vs Big-box centers</h3><p class="lead">Online 1-on-1, subject-matched tutor, flexible scheduling.</p></div>
+      </div>
+      <p class="lead" style="margin-top:14px">These documents are Ada's grounding sources — every policy/price/competitive claim is cited, never invented.</p>
+    </section>
+
+    <!-- EXP -->
+    <section class="screen" id="exp">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <b>Experiment · price_objection_rebuttal</b><span class="chip ok">auto_promoted</span>
+        </div>
+        <div class="grid" style="grid-template-columns:1fr auto 1fr;align-items:center;margin-top:18px">
+          <div><div class="klabel">Baseline close rate</div><div class="kpi" style="font-size:38px">50%</div></div>
+          <div style="text-align:center"><div class="delta">▲ +17%</div><div class="lead">winner: value-ROI</div></div>
+          <div><div class="klabel">Winner close rate</div><div class="kpi" style="font-size:38px">67%</div></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px"><b>Arms</b>
+        <table style="margin-top:10px">
+          <tr><th>Variant</th><th>Close</th><th>Objection resolved</th><th>Realism</th></tr>
+          <tr><td>baseline</td><td>50%</td><td>40%</td><td>0.88</td></tr>
+          <tr><td><span class="chip ok">value-ROI ▲</span></td><td>67%</td><td>72%</td><td>0.90</td></tr>
+          <tr><td>risk-reversal</td><td>58%</td><td>61%</td><td>0.86</td></tr>
+        </table></div>
+    </section>
+
+    <!-- PERS -->
+    <section class="screen" id="pers">
+      <div class="grid" style="grid-template-columns:repeat(2,1fr)">
+        <div class="card"><span class="chip cy">in_icp</span><h3>Budget Skeptic</h3><p class="lead">Pushes hard on price, compares to a $25/hr local tutor. Won't be pressured.</p></div>
+        <div class="card"><span class="chip cy">in_icp</span><h3>Fence Sitter</h3><p class="lead">Polite, non-committal, stalls. Needs a low-friction next step.</p></div>
+        <div class="card"><span class="chip warn">out_of_icp</span><h3>Disqualifier</h3><p class="lead">Wants a guaranteed score / out-of-scope exam. Should be politely let go.</p></div>
+        <div class="card"><span class="chip cy">in_icp</span><h3>Comparison Shopper</h3><p class="lead">Name-drops competitors, wants specifics not fluff.</p></div>
+      </div>
+      <p class="lead" style="margin-top:14px">Honest, non-obedient prospects engineered to break the agent — not a swarm that always says yes.</p>
+    </section>
+
+    <!-- KPI -->
+    <section class="screen" id="kpi">
+      <div class="grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="card"><div class="kpi">67%</div><div class="klabel">Close rate</div></div>
+        <div class="card"><div class="kpi">0.92</div><div class="klabel">Avg completeness</div></div>
+        <div class="card"><div class="kpi">13%</div><div class="klabel">Disqualified</div></div>
+        <div class="card"><div class="kpi">7.4</div><div class="klabel">Avg turns</div></div>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+const titles={live:["Live Call","Talk to Ada in real time — she discovers, qualifies, and closes."],
+calls:["Calls","Every call — web, phone, and simulated — with outcome and version."],
+detail:["Call detail","Full transcript and the turn-by-turn decision timeline."],
+kb:["Knowledge Base","The grounded sources Ada cites — no hallucinated facts."],
+exp:["Recursive Improvement","Baseline → variants → controlled experiment → promote/retire."],
+pers:["Synthetic Prospects","Adversarial leads that stress-test the agent."],
+kpi:["KPIs","Sales performance, attributed by agent version."]};
+document.getElementById('nav').addEventListener('click',e=>{
+  const a=e.target.closest('a'); if(!a)return;
+  document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('active'));
+  a.classList.add('active');
+  const s=a.dataset.s;
+  document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
+  document.getElementById(s).classList.add('on');
+  document.getElementById('title').textContent=titles[s][0];
+  document.getElementById('ld').textContent=titles[s][1];
+});
+</script>
+</body>
+</html>
