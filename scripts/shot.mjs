@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const url = process.argv[2] || 'https://www.nerdy.com';
+const out = process.argv[3] || 'design/nerdy-home.png';
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 1440, height: 900 }});
+await p.goto(url, { waitUntil: 'networkidle', timeout: 45000 }).catch(e=>console.log('nav warn:', e.message));
+await new Promise(r=>setTimeout(r,1500));
+await p.screenshot({ path: out, fullPage: false });
+console.log('TITLE:', await p.title());
+await b.close();
+console.log('SHOT OK ->', out);

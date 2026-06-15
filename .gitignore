@@ -1,0 +1,20 @@
+# secrets — NEVER commit
+.env
+.env.*
+!.env.example
+secrets/
+*.key
+# deps / build
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+dist/
+build/
+.DS_Store
+# data
+*.db
+*.sqlite3
+data/*.db
+demo/raw/
