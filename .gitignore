@@ -25,3 +25,6 @@ demo/audio/
 
 # local sqlite dir (wal/shm)
 backend/data/
+
+# demo artifacts (kept out of submission repo)
+demo/
