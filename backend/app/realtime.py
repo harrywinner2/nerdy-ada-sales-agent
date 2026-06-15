@@ -36,42 +36,49 @@ class OpenAIRealtime:
         self._agent_buf = ""
         self._closed = False
 
+    def _audio_format(self) -> dict:
+        # GA Realtime audio-format objects.
+        if self.audio_format == "g711_ulaw":
+            return {"type": "audio/pcmu"}
+        return {"type": "audio/pcm", "rate": 24000}
+
     async def connect(self) -> None:
+        # GA Realtime API: no "OpenAI-Beta" header (that triggers the now-disabled beta shape).
         self.ws = await websockets.connect(
             OPENAI_REALTIME_URL,
-            additional_headers={
-                "Authorization": f"Bearer {OPENAI_API_KEY}",
-                "OpenAI-Beta": "realtime=v1",
-            },
+            additional_headers={"Authorization": f"Bearer {OPENAI_API_KEY}"},
             max_size=None,
             ping_interval=20,
         )
         await self._configure()
         if self.greet:
-            await self._create_response(
-                "Greet the caller warmly as Ada from Nerdy, briefly say you can help find the "
-                "right tutoring plan, and ask an opening question.")
+            await self._create_response()
 
     async def _configure(self) -> None:
+        fmt = self._audio_format()
         cfg = {
             "type": "session.update",
             "session": {
-                "modalities": ["audio", "text"],
+                "type": "realtime",
                 "instructions": self.session.system_prompt(),
-                "voice": OPENAI_VOICE,
-                "input_audio_format": self.audio_format,
-                "output_audio_format": self.audio_format,
-                "input_audio_transcription": {"model": "gpt-4o-mini-transcribe"},
-                "turn_detection": {
-                    "type": "server_vad",
-                    "threshold": 0.5,
-                    "prefix_padding_ms": 300,
-                    "silence_duration_ms": 500,
-                    "create_response": True,
+                "output_modalities": ["audio"],
+                "audio": {
+                    "input": {
+                        "format": fmt,
+                        "turn_detection": {
+                            "type": "server_vad",
+                            "threshold": 0.5,
+                            "prefix_padding_ms": 300,
+                            "silence_duration_ms": 500,
+                            "create_response": True,
+                            "interrupt_response": True,
+                        },
+                        "transcription": {"model": "gpt-4o-mini-transcribe"},
+                    },
+                    "output": {"format": fmt, "voice": OPENAI_VOICE},
                 },
                 "tools": persona.tools_for_realtime(),
                 "tool_choice": "auto",
-                "temperature": 0.7,
             },
         }
         await self._send(cfg)
@@ -92,7 +99,8 @@ class OpenAIRealtime:
     async def _refresh_instructions(self) -> None:
         """Push updated playbook state (after a field was saved) into the live session."""
         await self._send({"type": "session.update",
-                          "session": {"instructions": self.session.system_prompt()}})
+                          "session": {"type": "realtime",
+                                      "instructions": self.session.system_prompt()}})
 
     async def pump(self) -> None:
         """Read OpenAI events until the socket closes."""

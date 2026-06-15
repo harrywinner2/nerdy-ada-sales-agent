@@ -11,3 +11,4 @@ Append-only. One line per meaningful decision or phase transition.
 - phase4: recursive loop RAN — baseline close 25% -> 75% (Value/ROI Framing), obj-res 0.67->1.0, decision=promoted_with_review. Honest: realism 0.94, 1 disqualified/arm.
 - deploy: Railway service ada-web LIVE at https://ada-web-production.up.railway.app (health ok, openai+twilio true, 12 KB docs). Multi-stage Docker.
 - verify: live site loads, 0 console errors; live experiment populates deployed dashboard.
+- fix: migrated Realtime bridge to GA API shape (gpt-realtime rejected beta header: beta_api_shape_disabled). Nested audio config, no beta header, response.create greeting. Verified: live web socket returns greeting audio + transcript. PASS.

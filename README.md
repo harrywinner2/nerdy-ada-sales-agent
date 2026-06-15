@@ -12,8 +12,9 @@ This is a working product, not a slide deck. The voice runs on the OpenAI Realti
 relay, knowledge base, decisioning, memory, and the recursive-improvement loop are a Python
 FastAPI service; the dashboard is React. It deploys as a single service.
 
-- **Live app:** _set after deploy_ (`docs/PRD-expanded.md` has the full spec)
-- **Built for:** Nerdy / Varsity Tutors — see the original brief in `tmp3.pdf`
+- **Live app:** https://ada-web-production.up.railway.app
+- **Source:** https://github.com/harrywinner2/nerdy-ada-sales-agent
+- **Spec:** `docs/PRD-expanded.md` · **Built for:** Nerdy / Varsity Tutors (brief in `tmp3.pdf`)
 
 ---
 
