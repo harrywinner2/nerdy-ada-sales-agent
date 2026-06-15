@@ -18,4 +18,7 @@ build/
 *.db
 *.sqlite3
 data/*.db
+# demo intermediates (keep demo/demo.mp4 + demo/script.md)
 demo/raw/
+demo/clips/
+demo/audio/
