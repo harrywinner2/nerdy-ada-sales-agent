@@ -22,3 +22,6 @@ data/*.db
 demo/raw/
 demo/clips/
 demo/audio/
+
+# local sqlite dir (wal/shm)
+backend/data/
