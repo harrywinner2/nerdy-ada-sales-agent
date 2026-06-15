@@ -1,0 +1,14 @@
+.git
+.venv
+backend/.venv
+**/__pycache__
+**/node_modules
+backend/static
+backend/data
+*.db
+*.sqlite3
+.env
+.env.*
+demo/raw
+design/*.png
+*.pdf

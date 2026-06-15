@@ -6,3 +6,8 @@ Append-only. One line per meaningful decision or phase transition.
 - preflight: PASS git/gh(harrywinner2)/node/npm; railway+vercel+wrangler authed; ffmpeg present; Playwright Chromium installed.
 - arch: OpenAI **Realtime API (speech-to-speech)** voice core; **FastAPI** relay; **React** dashboard; embedded **vector KB**; **self-play** recursive loop. Rationale: lowest-latency barge-in, all-OpenAI per provider access, Railway runs persistent WS natively.
 - phase2: captured nerdy.com via Playwright. Tokens: Poppins/Karla, canvas #0F0928/#161C2C, accent cyan #17E2EA, magenta→violet→cyan gradient. -> design/style-guide.md
+- phase3: ui/mockup.html single-file design artifact (all screens).
+- phase4: backend done; 9 tests green (7 unit + 2 real-API). Frontend: React/Vite dashboard, 7 wired screens, built to backend/static.
+- phase4: recursive loop RAN — baseline close 25% -> 75% (Value/ROI Framing), obj-res 0.67->1.0, decision=promoted_with_review. Honest: realism 0.94, 1 disqualified/arm.
+- deploy: Railway service ada-web LIVE at https://ada-web-production.up.railway.app (health ok, openai+twilio true, 12 KB docs). Multi-stage Docker.
+- verify: live site loads, 0 console errors; live experiment populates deployed dashboard.
